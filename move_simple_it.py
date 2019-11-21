@@ -1,21 +1,23 @@
 # Italian translations
 
-import move_simple.py
+import move_simple
+
 
 def ferma():
-    stop()
+    move_simple.stop()
+
 
 def destra(t):
-    right(t)
+    move_simple.right(t)
+
 
 def sinistra(t):
-    left(t)
+    move_simple.left(t)
+
 
 def avanti(t):
-    forwards(t)
+    move_simple.forward(t)
+
 
 def indietro(t):
-    backwards(t)
-
-def chiudere():
-    close(s)
+    move_simple.backward(t)
