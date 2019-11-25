@@ -1,20 +1,16 @@
 
 import move
+import signal
 from gpiozero import LineSensor
-
-# from gpiozero import LineSensor
-# from signal import pause
-
-# sensor = LineSensor(4)
-# sensor.when_line = lambda: print('Line detected')
-# sensor.when_no_line = lambda: print('No line detected')
-# pause()
 
 line_sensor = LineSensor(25)
 speed = 0.5
 
 
-# Search for the black line
+def exit_gracefully():
+    exit()
+
+
 def seek_line():
     print("Seeking the line")
 
@@ -50,14 +46,13 @@ def seek_line():
 line_sensor.when_line = lambda: move.forward()
 line_sensor.when_no_line = lambda: move.stop()
 
-try:
-    while True:
-        move.forward(speed)
-        line_sensor.wait_for_no_line()
-        if not seek_line():
-            print("Can't find any line")
-            break
+signal.signal(signal.SIGINT, exit_gracefully)
 
-# If you press CTRL+C, cleanup and stop
-except KeyboardInterrupt:
-    exit()
+while True:
+    move.forward(speed)
+    line_sensor.wait_for_no_line()
+    if not seek_line():
+        print("Can't find any line")
+        break
+
+exit_gracefully()
