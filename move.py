@@ -34,7 +34,7 @@ def left(s=1, t=0):
         sleep(t)
 
 
-def left2(s=1, t=0):
+def left_slow(s=1, t=0):
     motor_right.stop()
     motor_left.forward(s * speed_scale_left)
     if t != 0:
@@ -48,7 +48,7 @@ def right(s=1, t=0):
         sleep(t)
 
 
-def right2(s=1, t=0):
+def right_slow(s=1, t=0):
     motor_right.forward(s * speed_scale_right)
     motor_left.stop()
     if t != 0:
