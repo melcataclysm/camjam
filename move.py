@@ -28,7 +28,7 @@ def backward(s=1, t=0):
 
 
 def left(s=1, t=0):
-    motor_right.backward(s) * speed_scale_right
+    motor_right.backward(s * speed_scale_right)
     motor_left.forward(s * speed_scale_left)
     if t != 0:
         sleep(t)

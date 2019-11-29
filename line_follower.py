@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 import move
 import signal
@@ -30,14 +31,15 @@ def seek_line():
             print("Looking left")
             move.left(speed)
         else:
-            print("Looking Right")
+            print("Looking right")
             move.right(speed)
 
         line_sensor.wait_for_line(seek_time)
-        if line_sensor.value() < 0.5:
+        if line_sensor.value < 0.5:
             ret = True
         else:
             direction = not direction
+            seek_count += 1
             continue
 
     return ret
