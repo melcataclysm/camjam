@@ -5,8 +5,10 @@ import signal
 from gpiozero import LineSensor
 
 line_sensor = LineSensor(25, pull_up=True)
-speed = 0.4
 
+speed = 0.4
+move.speed_scale_left = 0.8
+move.speed_scale_right = 1
 
 def exit_gracefully(signal=None, stack=None):
     exit()
