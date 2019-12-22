@@ -4,11 +4,11 @@ import move
 import signal
 from gpiozero import LineSensor
 
-line_sensor = LineSensor(25)
-speed = 0.5
+line_sensor = LineSensor(25, pull_up=True)
+speed = 0.4
 
 
-def exit_gracefully():
+def exit_gracefully(signal=None, stack=None):
     exit()
 
 
@@ -17,16 +17,14 @@ def seek_line():
 
     ret = False
 
-    seek_size = 0.25  # Turn for 0.25s
-    seek_count = 1  # A count of times the robot has looked for the line
-    max_seek_count = 5  # The maximum time to seek the line in one direction
-    direction = True  # The direction the robot will turn - True = Left
+    seek_size = 0.35
+    seek_count = 1
+    max_seek_count = 5
+    direction = False
 
     while seek_count <= max_seek_count:
-        # Set the seek time
         seek_time = seek_size * seek_count
 
-        # Start the motors turning in a direction
         if direction:
             print("Looking left")
             move.left(speed)
@@ -37,9 +35,11 @@ def seek_line():
         line_sensor.wait_for_line(seek_time)
         if line_sensor.value < 0.5:
             ret = True
+            break
         else:
             direction = not direction
-            seek_count += 1
+            if direction:
+                seek_count += 1
             continue
 
     return ret
