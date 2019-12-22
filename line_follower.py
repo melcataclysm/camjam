@@ -3,8 +3,10 @@
 import move
 import signal
 from gpiozero import LineSensor
+from optparse import OptionParser
 
 line_sensor = LineSensor(25, pull_up=True)
+parser = OptionParser()
 
 speed = 0.4
 move.speed_scale_left = 0.8
@@ -46,6 +48,10 @@ def seek_line():
 
     return ret
 
+parser.add_option("-s", "--speed", type="float", dest="speed")
+(options, args) = parser.parse_args()
+if options.speed != None:
+    speed = options.speed
 
 line_sensor.when_line = lambda: move.forward()
 line_sensor.when_no_line = lambda: move.stop()
